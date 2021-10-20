@@ -11,18 +11,26 @@ namespace CompAndDel
             PictureProvider provider = new PictureProvider();
             IPicture picture = provider.GetPicture(@"luke.jpg");
 
-            IPipe pipenull = new PipeNull();
+            IFilter FilterTwitter = new FilterTwitter();
+            IFilter FilterSave = new FilterSavePicture();
+            IFilter FilterNegative = new FilterNegative();
+            IFilter FilterGreyscale = new FilterGreyscale();
 
-            IFilter filternegative = new FilterNegative();
-            IPipe pipeserial2 = new PipeSerial(filternegative, pipenull);
+            IPipe PipeNull = new PipeNull();
+            IPipe PipeGuardar4 = new PipeSerial(FilterSave, PipeNull);
 
-            IFilter save = new FilterSavePicture();
-            IPipe pipeserialguardar2 = new PipeSerial(save, pipeserial2);
-            
-            IFilter filtergreyscale = new FilterGreyscale();
-            IPipe pipeserial1 = new PipeSerial(filtergreyscale, pipeserialguardar2);
+            IPipe PipeTwitter3 = new PipeSerial(FilterTwitter, PipeGuardar4);
+            IPipe PipeGuardar3 = new PipeSerial(FilterSave, PipeTwitter3);
+            IPipe PipeSerial2 = new PipeSerial(FilterNegative, PipeGuardar3);
 
-            picture = pipeserial1.Send(picture);
+            IPipe PipeTwitter2 = new PipeSerial(FilterTwitter, PipeSerial2);
+            IPipe PipeGuardar2 = new PipeSerial(FilterSave, PipeTwitter2);
+            IPipe PipeSerial1 = new PipeSerial(FilterGreyscale, PipeGuardar2);
+
+            IPipe PipeTwitter1 = new PipeSerial(FilterTwitter, PipeSerial1);
+            IPipe PipeGuardar1 = new PipeSerial(FilterSave, PipeTwitter1);
+
+            picture = PipeGuardar1.Send(picture);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace CompAndDel.Filters
         public IPicture Filter(IPicture image)
         {
             var twitter = new TwitterImage();
-            Console.WriteLine(twitter.PublishToTwitter("test1", @"src/Program\filteredluke.jpg"));
+            Console.WriteLine(twitter.PublishToTwitter("test3", @"filteredluke.jpg"));
             return image;
         }
 
