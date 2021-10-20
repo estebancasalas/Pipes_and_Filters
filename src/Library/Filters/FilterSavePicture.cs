@@ -6,7 +6,7 @@ namespace CompAndDel.Filters
         {
 
             PictureProvider provider1 = new PictureProvider();
-            provider1.SavePicture(image, @"filteredluke.jpg");
+            provider1.SavePicture(image, @"filteredpicture.jpg");
             return image;
         }
     }
